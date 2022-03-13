@@ -1,0 +1,30 @@
+
+import urllib2, json, base64, urllib
+from urllib import urlencode # new module and function
+
+sensor_Raw = {0: '1.7', 1: '1.9', 2: '1.3', 3: '1.1', \
+              4: '1.1', 5: '-5', 6: '-5', 7: '-5', 8: '1.6', \
+              9: '-5', 10: 'N', 11: 'N', 12: 'J', 13: 0, 14: 'N', \
+              15: 'J', 16: 'N', 17: 'N', 18: 'N', 19: 'N', 20: '120', \
+              22: 'N', 23: 'N', 24: 'NOT YET', 25: '1', 27: 'N'}
+
+
+
+username = 'usernam'
+password = 'password'
+
+data = (sensor_Raw)
+print data
+bulkData = json.dumps(data, ensure_ascii = 'False')
+postData = urllib.urlencode({'results':bulkData})
+try:
+    # request = urllib2.Request("http://www.webermontage.nl/Zonneboiler/insert.php")
+    request = urllib2.Request("http://www.fam-vanommen.nl/zonneboiler/insert.php")
+
+    base64string = base64.encodestring('%s:%s' % (username, password)).replace('\n', '')
+    request.add_header("Authorization", "Basic %s" % base64string)
+    result = urllib2.urlopen(request, postData) # encoded_data)
+    print result
+
+except :
+    pass
